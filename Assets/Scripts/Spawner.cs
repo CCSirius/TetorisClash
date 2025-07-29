@@ -1,17 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     public GameObject[] tetrominoPrefabs;
+    private Queue<GameObject> queue = new Queue<GameObject>();
+
+    private void Start() => SpawnNext();
 
     public void SpawnNext()
     {
-        int index = Random.Range(0, tetrominoPrefabs.Length);
-        Instantiate(tetrominoPrefabs[index], transform.position, Quaternion.identity);
+        if (queue.Count == 0) FillBag();
+        Instantiate(queue.Dequeue(), transform.position, Quaternion.identity);
     }
 
-    private void Start()
+    private void FillBag()
     {
-        SpawnNext(); // 첫 블록 생성
+        List<GameObject> bag = new List<GameObject>(tetrominoPrefabs);
+        for (int i = 0; i < bag.Count; i++)
+        {
+            int r = Random.Range(i, bag.Count);
+            (bag[i], bag[r]) = (bag[r], bag[i]);
+        }
+
+        foreach (var block in bag)
+            queue.Enqueue(block);
     }
 }
