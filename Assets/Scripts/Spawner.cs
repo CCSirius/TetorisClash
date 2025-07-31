@@ -6,12 +6,45 @@ public class Spawner : MonoBehaviour
     public GameObject[] tetrominoPrefabs;
     private Queue<GameObject> queue = new Queue<GameObject>();
 
-    private void Start() => SpawnNext();
+    [Header("Next Preview")]
+    public NextSlotManager nextSlotManager;
+
+    public Vector3 SpawnPosition => transform.position;
+
+    private void Start()
+    {
+        FillBag();
+        SpawnNext();
+    }
 
     public void SpawnNext()
     {
-        if (queue.Count == 0) FillBag();
-        Instantiate(queue.Dequeue(), transform.position, Quaternion.identity);
+        if (queue.Count < 4)
+            FillBag();
+
+        GameObject prefab = queue.Dequeue();
+        GameObject instance = Instantiate(prefab, SpawnPosition, Quaternion.identity);
+
+        Tetromino t = instance.GetComponent<Tetromino>();
+        if (t != null)
+        {
+            t.createGhostOnStart = true;
+            t.originalPrefab = prefab;
+        }
+
+        nextSlotManager?.UpdateSlots();
+    }
+
+    public GameObject SpawnTetromino(GameObject prefab, bool createGhost)
+    {
+        GameObject instance = Instantiate(prefab, SpawnPosition, Quaternion.identity);
+        Tetromino t = instance.GetComponent<Tetromino>();
+        if (t != null)
+        {
+            t.createGhostOnStart = createGhost;
+            t.originalPrefab = prefab;
+        }
+        return instance;
     }
 
     private void FillBag()
@@ -25,5 +58,7 @@ public class Spawner : MonoBehaviour
 
         foreach (var block in bag)
             queue.Enqueue(block);
+
+        nextSlotManager?.Initialize(queue);
     }
 }

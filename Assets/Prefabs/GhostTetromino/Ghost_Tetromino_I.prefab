@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 4475530165443580576}
   m_Layer: 0
   m_Name: Ghost_Tetromino_I
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -643,6 +643,7 @@ MonoBehaviour:
   softDropMultiplier: 0.1
   repeatDelay: 0.2
   repeatRate: 0.05
+  iconSprite: {fileID: 0}
 --- !u!1 &8567069503254536413
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,15 @@ public class GridManager : MonoBehaviour
         foreach (Transform child in tetromino)
         {
             Vector2Int pos = Round(child.position);
-            if (pos.y < height && InsideBorder(pos))
+
+            // 블럭의 높이가 초과됨을 감지되면 게임오버
+            if (pos.y >= height)
+            {
+                GameManager.Instance.GameOver();
+                return;
+            }
+
+            if (InsideBorder(pos))
                 grid[pos.x, pos.y] = child;
         }
     }
@@ -47,6 +55,8 @@ public class GridManager : MonoBehaviour
 
     public static void CheckForLines()
     {
+        bool clearedAny = false;
+
         for (int y = 0; y < height; ++y)
         {
             if (IsFullLine(y))
@@ -54,8 +64,14 @@ public class GridManager : MonoBehaviour
                 DeleteLine(y);
                 MoveAllRowsDown(y + 1);
                 y--;
+                clearedAny = true;
             }
         }
+
+        if (clearedAny)
+            GameManager.Instance.OnLineCleared();
+        else
+            GameManager.Instance.OnLineClearBreak();
     }
 
     private static bool IsFullLine(int y)
@@ -106,4 +122,6 @@ public class GridManager : MonoBehaviour
             if (p != null && p.childCount == 0)
                 GameObject.Destroy(p.gameObject);
     }
+
+
 }

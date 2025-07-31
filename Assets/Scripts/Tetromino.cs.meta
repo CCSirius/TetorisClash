@@ -3,7 +3,9 @@ guid: 3ce1aea2f9b5ca74dae63f234021c203
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - iconSprite: {fileID: 21300000, guid: 1ef56c4273f8c724397bc0f456a77194, type: 3}
+  - originalPrefab: {fileID: 8321853355135181764, guid: 322b7e562c08e6a468473ef45f4d236d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

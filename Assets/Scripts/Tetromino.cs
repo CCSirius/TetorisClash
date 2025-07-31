@@ -11,6 +11,9 @@ public class Tetromino : MonoBehaviour
     public float repeatRate = 0.05f;
     private float horizontalPressTime;
     private int lastDirection;
+    public Sprite iconSprite;
+    public GameObject originalPrefab;
+    public bool createGhostOnStart = true;
 
     private void Start()
     {
@@ -22,7 +25,9 @@ public class Tetromino : MonoBehaviour
         }
 
         previousTime = Time.time;
-        Invoke(nameof(CreateGhost), 0.01f);
+
+        if (createGhostOnStart)
+            Invoke(nameof(CreateGhost), 0.01f);
     }
 
     private void Update()
@@ -85,6 +90,7 @@ public class Tetromino : MonoBehaviour
             {
                 GridManager.AddToGrid(transform);
                 GridManager.CheckForLines();
+                FindObjectOfType<HoldManager>()?.ResetHoldTurn();
                 Destroy(ghost);
                 enabled = false;
                 FindObjectOfType<Spawner>().SpawnNext();
@@ -103,7 +109,6 @@ public class Tetromino : MonoBehaviour
         }
         transform.Rotate(0, 0, -angle);
     }
-
     void HardDrop()
     {
         while (true)
@@ -118,12 +123,18 @@ public class Tetromino : MonoBehaviour
 
         GridManager.AddToGrid(transform);
         GridManager.CheckForLines();
+
+        FindObjectOfType<HoldManager>()?.ResetHoldTurn();  // ✅ 추가된 줄
+
         Destroy(ghost);
         enabled = false;
         FindObjectOfType<Spawner>().SpawnNext();
     }
 
-    void Hold() { }
+    void Hold()
+    {
+        FindObjectOfType<HoldManager>()?.Hold(gameObject);
+    }
 
     void CreateGhost()
     {
@@ -141,6 +152,7 @@ public class Tetromino : MonoBehaviour
             }
         }
 
+        ghost.tag = "Ghost";
         UpdateGhost();
     }
 

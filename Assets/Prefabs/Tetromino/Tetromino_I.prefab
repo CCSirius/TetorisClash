@@ -52,6 +52,9 @@ MonoBehaviour:
   softDropMultiplier: 0.1
   repeatDelay: 0.2
   repeatRate: 0.05
+  iconSprite: {fileID: 21300000, guid: 1ef56c4273f8c724397bc0f456a77194, type: 3}
+  originalPrefab: {fileID: 6240211248739175382}
+  createGhostOnStart: 1
 --- !u!1001 &912736780401949778
 PrefabInstance:
   m_ObjectHideFlags: 0

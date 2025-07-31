@@ -50,6 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallTime: 0.5
   softDropMultiplier: 0.1
+  repeatDelay: 0.2
+  repeatRate: 0.05
+  iconSprite: {fileID: 21300000, guid: 4ac95d3f37e8a9d4fb49a92075aa9c06, type: 3}
+  originalPrefab: {fileID: 8318478550858311227}
+  createGhostOnStart: 1
 --- !u!1001 &7245142280441830619
 PrefabInstance:
   m_ObjectHideFlags: 0
