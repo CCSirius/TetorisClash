@@ -55,7 +55,7 @@ public class GridManager : MonoBehaviour
 
     public static void CheckForLines()
     {
-        bool clearedAny = false;
+        int linesCleared = 0;
 
         for (int y = 0; y < height; ++y)
         {
@@ -64,12 +64,12 @@ public class GridManager : MonoBehaviour
                 DeleteLine(y);
                 MoveAllRowsDown(y + 1);
                 y--;
-                clearedAny = true;
+                linesCleared++;
             }
         }
 
-        if (clearedAny)
-            GameManager.Instance.OnLineCleared();
+        if (linesCleared > 0)
+            GameManager.Instance.OnLineCleared(linesCleared);
         else
             GameManager.Instance.OnLineClearBreak();
     }
