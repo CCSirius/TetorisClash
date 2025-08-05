@@ -65,6 +65,15 @@ public class GameManager : MonoBehaviour
         comboCount++;
         Debug.Log($"Score: {score}, Combo x{comboCount}");
         UpdateUI();
+
+        // 효과음 재생
+        SFXManager.Instance.PlayLineClear();
+
+        // 콤보 사운드 (4콤보 이상일 때만)
+        if (comboCount >= 4)
+        {
+            SFXManager.Instance.PlayCombo(comboCount);
+        }
     }
 
     public void OnLineClearBreak()
